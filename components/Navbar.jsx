@@ -19,8 +19,8 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <Droplets className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">AquaFlow</span>
+              <img src="jnmp_logo.jpg" alt="JMNP-Img" className="h-8 w-8"/>
+              <span className="text-xl font-bold text-gray-900">JMNP WaterSupply </span>
             </Link>
           </div>
 

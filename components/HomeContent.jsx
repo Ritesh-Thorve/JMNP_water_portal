@@ -34,11 +34,13 @@ export default function HomeContent() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+      <section
+        className="bg-gradient-to-r from-blue-600 to-blue-800 text-orange-400 bg-cover bg-center bg-no-repeat brightness-100"
+        style={{ backgroundImage: "url('/hero_img.jpg')" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{t("heroTitle")}</h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">{t("heroSubtitle")}</p>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">{t("heroTitle")}</h1>
+            <p className="text-2xl md:text-2xl mb-8 font-bold">{t("heroSubtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/news"

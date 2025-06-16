@@ -8,7 +8,7 @@ import { Upload, Send, CheckCircle } from "lucide-react"
 export default function SubmitQuery() {
   const [formData, setFormData] = useState({
     fullName: "",
-    email: "",
+    phone: "",
     wardNumber: "",
     issueType: "",
     message: "",
@@ -60,7 +60,7 @@ export default function SubmitQuery() {
       setIsSubmitted(false)
       setFormData({
         fullName: "",
-        email: "",
+        phone: "",
         wardNumber: "",
         issueType: "",
         message: "",
@@ -81,7 +81,7 @@ export default function SubmitQuery() {
               Thank you for your submission. We have received your query and will respond within 24 hours.
             </p>
             <p className="text-sm text-gray-500">
-              You will receive a confirmation email shortly with your query reference number.
+              You will receive a confirmation phone message shortly with your query reference number.
             </p>
           </div>
         </div>
@@ -125,18 +125,18 @@ export default function SubmitQuery() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address *
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  phone No *
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
+                  type="phone"
+                  id="phone"
+                  name="phone"
                   required
-                  value={formData.email}
+                  value={formData.phone}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Enter your email address"
+                  placeholder="Enter your phone no"
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
 "use client"
-
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Lock, User, Eye, EyeOff } from "lucide-react"
 
@@ -47,7 +47,7 @@ export default function AdminLogin() {
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
         <div className="text-center mb-8">
           <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Lock className="h-8 w-8 text-blue-600" />
+            <Lock className="h-8 w-8  text-blue-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
           <p className="text-gray-600 mt-2">Access the administrative dashboard</p>
@@ -125,7 +125,11 @@ export default function AdminLogin() {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-500">
             Need an admin account?{" "}
-            <a href="/admin/signup" className="text-blue-600 hover:text-blue-800 font-medium">
+            <a
+              href="/admin/signup"
+              className="text-blue-600 hover:text-blue-800 font-medium opacity-50 cursor-not-allowed"
+              onClick={(e) => e.preventDefault()}
+            >
               Request Access
             </a>
           </p>

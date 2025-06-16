@@ -22,13 +22,24 @@ import {
 
 export default function WaterInfo() {
   const [activeTab, setActiveTab] = useState("importance")
-  const [waterUsageCalculator, setWaterUsageCalculator] = useState({
-    showers: 0,
-    dishwashing: 0,
-    laundry: 0,
-    gardening: 0,
-    carWashing: 0,
-  })
+
+  const tabs = [
+    {
+      id: "importance",
+      label: "Importance",
+      icon: <Leaf className="h-5 w-5" />,
+    },
+    {
+      id: "conservation",
+      label: "Conservation",
+      icon: <Droplets className="h-5 w-5" />,
+    },
+    {
+      id: "cycle",
+      label: "Water Cycle",
+      icon: <Globe className="h-5 w-5" />,
+    },
+  ];
 
   const waterFacts = [
     {
@@ -113,7 +124,7 @@ export default function WaterInfo() {
     },
     {
       step: "Precipitation",
-      description: "Water falls back to Earth as rain, snow, sleet, or hail",
+      description: "Water falls back to Earth as rain, snow, sleet, or hail to return its level",
       icon: "🌧️",
     },
     {
@@ -124,46 +135,37 @@ export default function WaterInfo() {
   ]
 
   const dailyWaterUsage = [
-    { activity: "Shower (8 min)", usage: 64, icon: <Shower className="h-5 w-5" /> },
-    { activity: "Toilet flush", usage: 6, icon: <Home className="h-5 w-5" /> },
-    { activity: "Brushing teeth", usage: 2, icon: <Heart className="h-5 w-5" /> },
-    { activity: "Dishwasher", usage: 24, icon: <Utensils className="h-5 w-5" /> },
-    { activity: "Washing machine", usage: 40, icon: <Home className="h-5 w-5" /> },
-    { activity: "Car wash", usage: 150, icon: <Car className="h-5 w-5" /> },
-  ]
-
-  const calculateWaterUsage = () => {
-    const rates = {
-      showers: 8, // gallons per minute
-      dishwashing: 2,
-      laundry: 40, // per load
-      gardening: 10, // per hour
-      carWashing: 150, // per wash
-    }
-
-    const daily =
-      waterUsageCalculator.showers * rates.showers +
-      waterUsageCalculator.dishwashing * rates.dishwashing +
-      waterUsageCalculator.laundry * rates.laundry +
-      waterUsageCalculator.gardening * rates.gardening +
-      waterUsageCalculator.carWashing * rates.carWashing
-
-    return {
-      daily: daily,
-      weekly: daily * 7,
-      monthly: daily * 30,
-      yearly: daily * 365,
-    }
-  }
-
-  const usage = calculateWaterUsage()
-
-  const tabs = [
-    { id: "importance", label: "Why Water Matters", icon: <Heart className="h-4 w-4" /> },
-    { id: "conservation", label: "Conservation Tips", icon: <Leaf className="h-4 w-4" /> },
-    { id: "cycle", label: "Water Cycle", icon: <Globe className="h-4 w-4" /> },
-    { id: "calculator", label: "Usage Calculator", icon: <Calculator className="h-4 w-4" /> },
-  ]
+    {
+      activity: "Shower (10 min)",
+      usage: 95,
+      icon: <Shower className="h-5 w-5 text-blue-600" />,
+    },
+    {
+      activity: "Toilet Flush",
+      usage: 15,
+      icon: <Home className="h-5 w-5 text-blue-600" />,
+    },
+    {
+      activity: "Teeth Brushing",
+      usage: 8,
+      icon: <Home className="h-5 w-5 text-blue-600" />,
+    },
+    {
+      activity: "Hand Washing",
+      usage: 4,
+      icon: <Home className="h-5 w-5 text-blue-600" />,
+    },
+    {
+      activity: "Dishwashing",
+      usage: 30,
+      icon: <Utensils className="h-5 w-5 text-blue-600" />,
+    },
+    {
+      activity: "Laundry",
+      usage: 70,
+      icon: <Home className="h-5 w-5 text-blue-600" />,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -214,11 +216,10 @@ export default function WaterInfo() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 px-6 py-3 font-medium transition-colors ${
-                  activeTab === tab.id
+                className={`flex items-center space-x-2 px-6 py-3 font-medium transition-colors ${activeTab === tab.id
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : "text-gray-600 hover:text-blue-600"
-                }`}
+                  }`}
               >
                 {tab.icon}
                 <span>{tab.label}</span>
@@ -397,151 +398,6 @@ export default function WaterInfo() {
 
                     <h4 className="font-semibold text-gray-900 mb-2">Ecosystem Support</h4>
                     <p className="text-gray-700">All ecosystems depend on the water cycle for survival and balance.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === "calculator" && (
-            <div className="space-y-12">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Water Usage Calculator</h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  Calculate your daily water consumption and discover ways to reduce your usage.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div className="bg-white p-8 rounded-xl shadow-lg">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6">Enter Your Daily Activities</h3>
-                  <div className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Shower time (minutes per day)
-                      </label>
-                      <input
-                        type="number"
-                        min="0"
-                        value={waterUsageCalculator.showers}
-                        onChange={(e) =>
-                          setWaterUsageCalculator((prev) => ({
-                            ...prev,
-                            showers: Number.parseInt(e.target.value) || 0,
-                          }))
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="e.g., 10"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Dishwashing time (minutes per day)
-                      </label>
-                      <input
-                        type="number"
-                        min="0"
-                        value={waterUsageCalculator.dishwashing}
-                        onChange={(e) =>
-                          setWaterUsageCalculator((prev) => ({
-                            ...prev,
-                            dishwashing: Number.parseInt(e.target.value) || 0,
-                          }))
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="e.g., 5"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Laundry loads per day</label>
-                      <input
-                        type="number"
-                        min="0"
-                        value={waterUsageCalculator.laundry}
-                        onChange={(e) =>
-                          setWaterUsageCalculator((prev) => ({
-                            ...prev,
-                            laundry: Number.parseInt(e.target.value) || 0,
-                          }))
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="e.g., 1"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Gardening time (hours per day)
-                      </label>
-                      <input
-                        type="number"
-                        min="0"
-                        value={waterUsageCalculator.gardening}
-                        onChange={(e) =>
-                          setWaterUsageCalculator((prev) => ({
-                            ...prev,
-                            gardening: Number.parseInt(e.target.value) || 0,
-                          }))
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="e.g., 0.5"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Car washing (times per day)
-                      </label>
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.1"
-                        value={waterUsageCalculator.carWashing}
-                        onChange={(e) =>
-                          setWaterUsageCalculator((prev) => ({
-                            ...prev,
-                            carWashing: Number.parseFloat(e.target.value) || 0,
-                          }))
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="e.g., 0.1"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-blue-50 p-8 rounded-xl">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6">Your Water Usage</h3>
-                  <div className="space-y-4">
-                    <div className="bg-white p-4 rounded-lg flex justify-between items-center">
-                      <span className="font-medium text-gray-900">Daily Usage:</span>
-                      <span className="text-2xl font-bold text-blue-600">{usage.daily}L</span>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg flex justify-between items-center">
-                      <span className="font-medium text-gray-900">Weekly Usage:</span>
-                      <span className="text-xl font-bold text-blue-600">{usage.weekly}L</span>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg flex justify-between items-center">
-                      <span className="font-medium text-gray-900">Monthly Usage:</span>
-                      <span className="text-xl font-bold text-blue-600">{usage.monthly}L</span>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg flex justify-between items-center">
-                      <span className="font-medium text-gray-900">Yearly Usage:</span>
-                      <span className="text-xl font-bold text-blue-600">{usage.yearly}L</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 p-4 bg-white rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">Conservation Impact</h4>
-                    <p className="text-sm text-gray-600 mb-2">If you reduce your daily usage by just 20%:</p>
-                    <ul className="text-sm text-green-600 space-y-1">
-                      <li>• Save {(usage.daily * 0.2).toFixed(1)}L per day</li>
-                      <li>• Save {(usage.yearly * 0.2).toFixed(0)}L per year</li>
-                      <li>• Reduce your environmental impact</li>
-                      <li>• Lower your water bills</li>
-                    </ul>
                   </div>
                 </div>
               </div>

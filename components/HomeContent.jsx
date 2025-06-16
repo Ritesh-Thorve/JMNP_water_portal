@@ -35,7 +35,7 @@ export default function HomeContent() {
     <>
       {/* Hero Section */}
       <section
-        className="bg-gradient-to-r from-blue-600 to-blue-800 text-orange-400 bg-cover bg-center bg-no-repeat brightness-100"
+        className="bg-gradient-to-r from-blue-600 to-blue-800 text-red-500 bg-cover bg-center bg-no-repeat brightness-95"
         style={{ backgroundImage: "url('/hero_img.jpg')" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">

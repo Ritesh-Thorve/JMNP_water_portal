@@ -7,7 +7,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata = {
   title: "JMNP-Water Management System",
   description: "Municipal Water Supply Management Portal",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({ children }) {

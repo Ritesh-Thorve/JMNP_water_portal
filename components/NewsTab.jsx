@@ -9,6 +9,7 @@ export default function NewsTab() {
     description: "",
     wardNumber: "all",
   })
+  
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 

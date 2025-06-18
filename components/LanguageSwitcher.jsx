@@ -5,7 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext"
 import { Globe, ChevronDown } from "lucide-react"
 
 export default function LanguageSwitcher() {
-  const { language, changeLanguage } = useLanguage()
+  const { language, changeLanguage } = useLanguage() // custom hook
   const [isOpen, setIsOpen] = useState(false)
 
   const languages = [
@@ -32,6 +32,7 @@ export default function LanguageSwitcher() {
         <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
+      {/* after opening a drawer its gives list of languages */}
       {isOpen && (
         <>
           {/* Backdrop */}

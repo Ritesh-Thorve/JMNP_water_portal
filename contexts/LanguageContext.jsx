@@ -1,9 +1,9 @@
 "use client"
-
 import { createContext, useContext, useState, useEffect } from "react"
 
 const LanguageContext = createContext()
 
+{/* custom hook */}
 export const useLanguage = () => {
   const context = useContext(LanguageContext)
   if (!context) {
@@ -28,5 +28,7 @@ export const LanguageProvider = ({ children }) => {
     localStorage.setItem("selectedLanguage", newLanguage)
   }
 
-  return <LanguageContext.Provider value={{ language, changeLanguage }}>{children}</LanguageContext.Provider>
+  return (
+    <LanguageContext.Provider value={{ language, changeLanguage }}>{children}</LanguageContext.Provider>
+  )
 }

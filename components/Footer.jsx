@@ -3,6 +3,7 @@
 import { Droplets, Mail, Phone, MapPin } from "lucide-react"
 import { useLanguage } from "../contexts/LanguageContext"
 import { getTranslation } from "../utils/translations"
+import Link from "next/link"
 
 export default function Footer() {
   const { language } = useLanguage()
@@ -24,19 +25,19 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">{t("quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-gray-300 hover:text-blue-400 transition-colors">
+                <Link href="/" className="text-gray-300 hover:text-blue-400 transition-colors">
                   {t("home")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/news" className="text-gray-300 hover:text-blue-400 transition-colors">
+                <Link href="/news" className="text-gray-300 hover:text-blue-400 transition-colors">
                   {t("news")}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/submit-query" className="text-gray-300 hover:text-blue-400 transition-colors">
+                <Link href="/submit-query" className="text-gray-300 hover:text-blue-400 transition-colors">
                   {t("submitQuery")}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

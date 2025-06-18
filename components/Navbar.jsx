@@ -1,5 +1,4 @@
 "use client"
-
 import { useState } from "react"
 import Link from "next/link"
 import { Menu, X, Droplets } from "lucide-react"
@@ -11,7 +10,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { language } = useLanguage()
 
-  const t = (key) => getTranslation(language, key)
+  {/* some part of app that translated into three languages */}
+  const translate = (key) => getTranslation(language, key)
 
   return (
     <nav className="bg-white shadow-lg border-b">
@@ -30,38 +30,38 @@ export default function Navbar() {
               href="/"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              {t("home")}
+              {translate("home")}
             </Link>
             <Link
               href="/news"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              {t("news")}
+              {translate("news")}
             </Link>
             <Link
               href="/submit-query"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              {t("submitQuery")}
+              {translate("submitQuery")}
             </Link>
             <Link
               href="/about"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              {t("aboutUs")}
+              {translate("aboutUs")}
             </Link>
             <Link
               href="/water-info"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              {t("waterInfo")}
+              {translate("waterInfo")}
             </Link>
             <LanguageSwitcher />
             <Link
               href="/admin/login"
               className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
             >
-              {t("adminLogin")}
+              {translate("adminLogin")}
             </Link>
           </div>
 
@@ -85,37 +85,37 @@ export default function Navbar() {
                 href="/"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium"
               >
-                {t("home")}
+                {translate("home")}
               </Link>
               <Link
                 href="/news"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium"
               >
-                {t("news")}
+                {translate("news")}
               </Link>
               <Link
                 href="/submit-query"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium"
               >
-                {t("submitQuery")}
+                {translate("submitQuery")}
               </Link>
               <Link
                 href="/about"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium"
               >
-                {t("aboutUs")}
+                {translate("aboutUs")}
               </Link>
               <Link
                 href="/water-info"
                 className="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium"
               >
-                {t("waterInfo")}
+                {translate("waterInfo")}
               </Link>
               <Link
                 href="/admin/login"
                 className="block bg-blue-600 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700"
               >
-                {t("adminLogin")}
+                {translate("adminLogin")}
               </Link>
             </div>
           </div>

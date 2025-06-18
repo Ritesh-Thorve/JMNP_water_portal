@@ -3,6 +3,7 @@
 import { useLanguage } from "../contexts/LanguageContext"
 import { getTranslation } from "../utils/translations"
 import { Droplets, Shield, Clock, Users } from "lucide-react"
+import Link from "next/link"
 
 export default function HomeContent() {
   const { language } = useLanguage()
@@ -35,25 +36,25 @@ export default function HomeContent() {
     <>
       {/* Hero Section */}
       <section
-        className="bg-gradient-to-r  text-red-600 bg-cover bg-center bg-no-repeat brightness-95"
+        className="bg-gradient-to-r text-white bg-cover bg-center bg-no-repeat brightness-95"
         style={{ backgroundImage: "url('/hero_img.jpg')" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">{t("heroTitle")}</h1>
-            <p className="text-2xl md:text-2xl mb-8 font-bold">{t("heroSubtitle")}</p>
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-6">{t("heroTitle")}</h1>
+            <p className="text-2xl md:text-2xl mb-8 font-extrabold">{t("heroSubtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
+              <Link
                 href="/news"
                 className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 {t("viewUpdates")}
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/submit-query"
                 className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
               >
                 {t("reportIssue")}
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -108,12 +109,12 @@ export default function HomeContent() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">{t("needHelp")}</h2>
           <p className="text-lg text-gray-600 mb-8">{t("needHelpDesc")}</p>
-          <a
+          <Link
             href="/submit-query"
             className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             {t("submitQuery")}
-          </a>
+          </Link>
         </div>
       </section>
     </>

@@ -14,10 +14,12 @@ export default function SubmitQuery() {
     message: "",
     image: null,
   })
+
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const wards = Array.from({ length: 20 }, (_, i) => i + 1)
+  const wards = Array.from({ length: 20 }, (_, i) => i + 1)   
+
   const issueTypes = [
     "No Water Supply",
     "Low Water Pressure",
@@ -29,6 +31,7 @@ export default function SubmitQuery() {
     "Other",
   ]
 
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -40,7 +43,7 @@ export default function SubmitQuery() {
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     setFormData((prev) => ({
-      ...prev,
+      ...prev, 
       image: file,
     }))
   }
@@ -164,6 +167,7 @@ export default function SubmitQuery() {
                 </select>
               </div>
 
+               {/* Issue Type */}
               <div>
                 <label htmlFor="issueType" className="block text-sm font-medium text-gray-700 mb-2">
                   Issue Type *

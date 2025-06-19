@@ -81,9 +81,11 @@ export default function News() {
     "20",
   ]
 
+  // Filter news based on selected ward
   const filteredNews =
     selectedWard === "all" ? newsData : newsData.filter((item) => item.ward === selectedWard || item.ward === "all")
 
+  // Function to get color class based on news type
   const getTypeColor = (type) => {
     switch (type) {
       case "emergency":

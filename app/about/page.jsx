@@ -59,54 +59,6 @@ export default function About() {
     },
   ]
 
-  // Headquarters location (example coordinates)
-  const hqLocation = {
-    address: "Golany Market, Jalgaon",
-    lat: 21.007657,
-    lng: 75.562603,
-  }
-
-  const [userLocation, setUserLocation] = useState(null)
-  const [locationError, setLocationError] = useState(null)
-
-  // Haversine formula to calculate distance between two lat/lng points in km
-  function calculateDistance(lat1, lon1, lat2, lon2) {
-    function toRad(x) {
-      return (x * Math.PI) / 180
-    }
-    const R = 6371 // km
-    const dLat = toRad(lat2 - lat1)
-    const dLon = toRad(lon2 - lon1)
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    return (R * c).toFixed(2)
-  }
-
-  const getCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setLocationError("Geolocation is not supported by this browser.")
-      return
-    }
-    setLocationError(null)
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        })
-      },
-      (error) => {
-        setLocationError("Unable to retrieve your location.")
-      }
-    )
-  }
-
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />

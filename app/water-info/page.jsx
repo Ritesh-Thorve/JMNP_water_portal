@@ -3,21 +3,8 @@
 import { useState } from "react"
 import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
-import {
-  Droplets,
-  Leaf,
-  Globe,
-  Heart,
-  AlertTriangle,
-  CheckCircle,
-  Home,
-  ShowerHeadIcon as Shower,
-  Car,
-  Utensils,
-  TreePine,
-  Factory,
-  Users,
-  Calculator,
+import {Droplets, Leaf, Globe, Heart, AlertTriangle, CheckCircle, Home,
+ShowerHeadIcon as Shower, Utensils, TreePine, Factory, Users, Calculator,
 } from "lucide-react"
 
 export default function WaterInfo() {
@@ -414,18 +401,18 @@ export default function WaterInfo() {
             Start conserving water today and be part of the solution for a sustainable future.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+            <Link
               href="/submit-query"
               className="bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
               Report Water Issues
-            </a>
-            <a
+            </Link>
+            <Link
               href="/news"
               className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors"
             >
               Stay Updated
-            </a>
+            </Link>
           </div>
         </div>
       </section>

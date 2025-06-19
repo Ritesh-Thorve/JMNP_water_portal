@@ -6,6 +6,7 @@ import Footer from "../../components/Footer"
 import {Droplets, Leaf, Globe, Heart, AlertTriangle, CheckCircle, Home,
 ShowerHeadIcon as Shower, Utensils, TreePine, Factory, Users, Calculator,
 } from "lucide-react"
+import Link from "next/link"
 
 export default function WaterInfo() {
   const [activeTab, setActiveTab] = useState("importance")

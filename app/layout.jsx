@@ -1,10 +1,9 @@
-import "./globals.css"
-import { Inter } from "next/font/google"
-import { LanguageProvider } from "../contexts/LanguageContext"
-import { Providers } from "../lib/store/providers"
-import { store } from "../store/store"
+import "./globals.css";
+import { Inter } from "next/font/google";
+import { LanguageProvider } from "../contexts/LanguageContext";
+// import { Providers } from "../lib/store/Providers";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "JMNP-Water Management System",
@@ -13,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <Providers >
+    // <Providers>
       <html lang="en">
         <head>
           <link rel="icon" href="/jnmp_logo.jpg" sizes="any" />
@@ -22,6 +21,6 @@ export default function RootLayout({ children }) {
           <LanguageProvider>{children}</LanguageProvider>
         </body>
       </html>
-    </Providers>
+    // </Providers>
   );
 }

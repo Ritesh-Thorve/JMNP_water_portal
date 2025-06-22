@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { LanguageProvider } from "../contexts/LanguageContext";
-// import { Providers } from "../lib/store/Providers";
+import { reduxProvider } from "../lib/redux/provider/reduxProvider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,15 +12,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // <Providers>
-      <html lang="en">
-        <head>
-          <link rel="icon" href="/jnmp_logo.jpg" sizes="any" />
-        </head>
-        <body className={inter.className}>
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/jnmp_logo.jpg" sizes="any" />
+      </head>
+      <body className={inter.className}>
+         <reduxProvider>
           <LanguageProvider>{children}</LanguageProvider>
-        </body>
-      </html>
-    // </Providers>
+         </reduxProvider>
+      </body>
+    </html>
   );
 }

@@ -1,25 +1,24 @@
 "use client"
+
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useDispatch } from "react-redux"
+import { loginAdmin } from "../../../lib/redux/slices/adminAuthSlice"
+import authService from "../../../lib/appwrite/auth"
 import { Lock, User, Eye, EyeOff } from "lucide-react"
 
 export default function AdminLogin() {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  })
+  const [credentials, setCredentials] = useState({ email: "", password: "" })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+    setCredentials((prev) => ({ ...prev, [name]: value }))
     setError("")
   }
 
@@ -28,18 +27,21 @@ export default function AdminLogin() {
     setIsLoading(true)
     setError("")
 
-    // Simulate authentication (replace with actual auth logic)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      await authService.login({
+        email: credentials.email,
+        password: credentials.password,
+      })
 
-    if (credentials.username === "admin" && credentials.password === "admin123") {
-      // Store auth state (in real app, use proper auth management)
-      localStorage.setItem("adminAuth", "true")
+      const userData = await authService.getCurrentUser()
+      dispatch(loginAdmin(userData)) // store in Redux
       router.push("/admin/dashboard")
-    } else {
-      setError("Invalid username or password")
+    } catch (err) {
+      console.error("Login error", err)
+      setError("Invalid email or password")
+    } finally {
+      setIsLoading(false)
     }
-
-    setIsLoading(false)
   }
 
   return (
@@ -47,7 +49,7 @@ export default function AdminLogin() {
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
         <div className="text-center mb-8">
           <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Lock className="h-8 w-8  text-blue-600" />
+            <Lock className="h-8 w-8 text-blue-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
           <p className="text-gray-600 mt-2">Access the administrative dashboard</p>
@@ -55,20 +57,20 @@ export default function AdminLogin() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-              Username
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email
             </label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
-                type="text"
-                id="username"
-                name="username"
+                type="email"
+                id="email"
+                name="email"
                 required
-                value={credentials.username}
+                value={credentials.email}
                 onChange={handleInputChange}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your username"
+                placeholder="Enter your admin email"
               />
             </div>
           </div>
@@ -100,7 +102,9 @@ export default function AdminLogin() {
           </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">{error}</div>
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
           )}
 
           <button
@@ -120,15 +124,14 @@ export default function AdminLogin() {
         </form>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">Demo credentials: admin / admin123</p>
+          <p className="text-sm text-gray-500">Use the credentials provided by the IT admin.</p>
         </div>
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-500">
-            Need an admin account?{" "}
+            Need access?{" "}
             <a
               href="/admin/signup"
-              className="text-blue-600 hover:text-blue-800 font-medium opacity-50 cursor-not-allowed"
-              onClick={(e) => e.preventDefault()}
+              className="text-blue-600 hover:text-blue-800 font-medium"
             >
               Request Access
             </a>

@@ -1,19 +1,71 @@
 "use client"
 
 import { useState } from "react"
-import { AlertTriangle, Shield } from "lucide-react"
+import { useDispatch } from "react-redux"
+import { loginAdmin } from "../../../lib/redux/slices/adminAuthSlice"
+import authService from "../../../lib/appwrite/auth"
+import { Shield, AlertTriangle } from "lucide-react"
 
 export default function AdminSignup() {
+  const dispatch = useDispatch()
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    accessCode: "",
+  })
+
+  const [error, setError] = useState("")
   const [showAccessDenied, setShowAccessDenied] = useState(false)
 
-  const handleFormSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
-    setShowAccessDenied(true)
+
+    const { fullName, email, username, password, confirmPassword, accessCode } = formData
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match")
+      return
+    }
+
+    if (accessCode !== "AQUAFLOW@2024") {
+      setShowAccessDenied(true)
+      return
+    }
+
+    try {
+      const session = await authService.createAccount({
+        email,
+        password,
+        name: fullName,
+      })
+
+      const userData = await authService.getCurrentUser()
+
+      // Dispatch login info to Redux
+      dispatch(loginAdmin(userData))
+
+      // Optional: Redirect to admin dashboard
+      window.location.href = "/admin/dashboard"
+
+    } catch (err) {
+      console.error(err)
+      setError("Failed to create admin account")
+    }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-white rounded-xl shadow-2xl p-8">
+
+        {/* Header */}
         <div className="text-center mb-8">
           <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <Shield className="h-8 w-8 text-red-600" />
@@ -24,89 +76,27 @@ export default function AdminSignup() {
 
         {!showAccessDenied ? (
           <form onSubmit={handleFormSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Enter your full name"
-              />
-            </div>
+            {["fullName", "email", "username", "password", "confirmPassword", "accessCode"].map((field) => (
+              <div key={field}>
+                <label htmlFor={field} className="block text-sm font-medium text-gray-700 mb-2">
+                  {field
+                    .replace(/([A-Z])/g, " $1")
+                    .replace(/^./, (str) => str.toUpperCase())}
+                </label>
+                <input
+                  type={field.toLowerCase().includes("password") ? "password" : "text"}
+                  id={field}
+                  name={field}
+                  required
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  placeholder={`Enter ${field}`}
+                />
+              </div>
+            ))}
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Enter your email address"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Choose a username"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Create a strong password"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Confirm your password"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="accessCode" className="block text-sm font-medium text-gray-700 mb-2">
-                Admin Access Code
-              </label>
-              <input
-                type="password"
-                id="accessCode"
-                name="accessCode"
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Enter admin access code"
-              />
-            </div>
+            {error && <p className="text-red-600 text-sm">{error}</p>}
 
             <button
               type="submit"
@@ -116,6 +106,7 @@ export default function AdminSignup() {
             </button>
           </form>
         ) : (
+          // Access Denied UI
           <div className="text-center">
             <div className="bg-red-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
               <AlertTriangle className="h-10 w-10 text-red-600" />
@@ -128,14 +119,6 @@ export default function AdminSignup() {
                 be created by existing super administrators through the internal management system.
               </p>
             </div>
-            <div className="space-y-3 text-sm text-gray-600">
-              <p>
-                <strong>For access requests:</strong>
-              </p>
-              <p>📧 Contact: admin@aquaflow.gov</p>
-              <p>📞 Call: +1 (555) 123-ADMIN</p>
-              <p>🏢 Visit: IT Department, Main Office</p>
-            </div>
             <button
               onClick={() => setShowAccessDenied(false)}
               className="mt-6 text-red-600 hover:text-red-800 font-medium"
@@ -145,6 +128,7 @@ export default function AdminSignup() {
           </div>
         )}
 
+        {/* Already have account */}
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
             Already have an account?{" "}
@@ -154,6 +138,7 @@ export default function AdminSignup() {
           </p>
         </div>
 
+        {/* Security Notice */}
         {!showAccessDenied && (
           <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <div className="flex items-start space-x-2">

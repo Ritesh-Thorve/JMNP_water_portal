@@ -1,48 +1,54 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useDispatch } from "react-redux"
-import { loginAdmin } from "../../../lib/redux/slices/adminAuthSlice"
-import authService from "../../../lib/appwrite/auth"
-import { Lock, User, Eye, EyeOff } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { loginAdmin } from "../../../lib/redux/slices/adminAuthSlice";
+import authService from "../../../lib/appwrite/auth";
+import { Lock, User, Eye, EyeOff } from "lucide-react";
 
 export default function AdminLogin() {
-  const [credentials, setCredentials] = useState({ email: "", password: "" })
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setCredentials((prev) => ({ ...prev, [name]: value }))
-    setError("")
-  }
+    const { name, value } = e.target;
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+    setError("");
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     try {
       await authService.login({
         email: credentials.email,
         password: credentials.password,
-      })
+      });
 
-      const userData = await authService.getCurrentUser()
-      dispatch(loginAdmin(userData)) // store in Redux
-      router.push("/admin/dashboard")
+      const userData = await authService.getCurrentUser();
+
+      //Save auth status in localStorage
+      localStorage.setItem("adminAuth", "true");
+
+      dispatch(loginAdmin(userData));
+      router.push("/admin/dashboard");
     } catch (err) {
-      console.error("Login error", err)
-      setError("Invalid email or password")
+      console.error("Login error", err);
+      if (err.code === 401) setError("Invalid email or password.");
+      else if (err.code === 429)
+        setError("Too many login attempts. Please wait.");
+      else setError("Something went wrong.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
@@ -52,12 +58,15 @@ export default function AdminLogin() {
             <Lock className="h-8 w-8 text-blue-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
-          <p className="text-gray-600 mt-2">Access the administrative dashboard</p>
+          <p className="text-gray-600 mt-2">Access the admin dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Email
             </label>
             <div className="relative">
@@ -69,14 +78,17 @@ export default function AdminLogin() {
                 required
                 value={credentials.email}
                 onChange={handleInputChange}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your admin email"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Password
             </label>
             <div className="relative">
@@ -88,15 +100,19 @@ export default function AdminLogin() {
                 required
                 value={credentials.password}
                 onChange={handleInputChange}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
               >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
               </button>
             </div>
           </div>
@@ -110,7 +126,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50"
           >
             {isLoading ? (
               <div className="flex items-center justify-center space-x-2">
@@ -122,22 +138,7 @@ export default function AdminLogin() {
             )}
           </button>
         </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">Use the credentials provided by the IT admin.</p>
-        </div>
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-500">
-            Need access?{" "}
-            <a
-              href="/admin/signup"
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              Request Access
-            </a>
-          </p>
-        </div>
       </div>
     </div>
-  )
+  );
 }

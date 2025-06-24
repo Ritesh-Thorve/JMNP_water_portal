@@ -1,9 +1,13 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react"
 
-const LanguageContext = createContext()
+// ✅ Provide default value to avoid React 418 error
+const LanguageContext = createContext({
+  language: "english",
+  changeLanguage: () => {},
+})
 
-{/* custom hook */}
+// ✅ Custom hook
 export const useLanguage = () => {
   const context = useContext(LanguageContext)
   if (!context) {
@@ -12,11 +16,11 @@ export const useLanguage = () => {
   return context
 }
 
+// ✅ Provider component
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState("english")
 
   useEffect(() => {
-    // Load saved language from localStorage
     const savedLanguage = localStorage.getItem("selectedLanguage")
     if (savedLanguage && ["english", "hindi", "marathi"].includes(savedLanguage)) {
       setLanguage(savedLanguage)
@@ -29,6 +33,8 @@ export const LanguageProvider = ({ children }) => {
   }
 
   return (
-    <LanguageContext.Provider value={{ language, changeLanguage }}>{children}</LanguageContext.Provider>
+    <LanguageContext.Provider value={{ language, changeLanguage }}>
+      {children}
+    </LanguageContext.Provider>
   )
 }

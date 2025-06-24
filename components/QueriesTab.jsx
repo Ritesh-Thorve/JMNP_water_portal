@@ -1,14 +1,13 @@
 "use client"
-
 import { useState } from "react"
-import { Eye, Search, Calendar, MapPin, Phone, User, ImageIcon, X } from "lucide-react"
+import dayjs from "dayjs"
+import { Eye, Calendar, MapPin, Phone, User, ImageIcon, X } from "lucide-react"
 
 export default function QueriesTab() {
   const [selectedWard, setSelectedWard] = useState("all")
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [selectedQuery, setSelectedQuery] = useState(null)
 
-  // Mock data for queries
   const queriesData = [
     {
       id: 1,
@@ -56,29 +55,9 @@ export default function QueriesTab() {
     },
   ]
 
-  const wards = [
-    "all",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-  ]
+  const wards = Array.from({ length: 20 }, (_, i) => String(i + 1))
+  wards.unshift("all")
+
   const statuses = ["all", "pending", "in-progress", "resolved"]
 
   const filteredQueries = queriesData.filter((query) => {
@@ -101,9 +80,7 @@ export default function QueriesTab() {
   }
 
   const updateQueryStatus = (queryId, newStatus) => {
-    // In a real app, this would make an API call
     console.log(`Updating query ${queryId} to status: ${newStatus}`)
-    // Update local state or refetch data
   }
 
   return (
@@ -113,7 +90,6 @@ export default function QueriesTab() {
         <div className="text-sm text-gray-500">Total: {filteredQueries.length} queries</div>
       </div>
 
-      {/* Filters */}
       <div className="bg-white p-6 rounded-xl shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
@@ -148,7 +124,6 @@ export default function QueriesTab() {
         </div>
       </div>
 
-      {/* Queries Table */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -157,24 +132,20 @@ export default function QueriesTab() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Query Details
                 </th>
-
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Contact
                 </th>
-
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-
-            {/* table body section*/}
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredQueries.map((query) => (
                 <tr key={query.id} className="hover:bg-gray-50">
@@ -193,8 +164,6 @@ export default function QueriesTab() {
                       </div>
                     </div>
                   </td>
-
-                  {/* contact */}
                   <td className="px-6 py-4">
                     <div className="text-sm">
                       <div className="flex items-center text-gray-900 mb-1">
@@ -207,8 +176,6 @@ export default function QueriesTab() {
                       </div>
                     </div>
                   </td>
-                  
-                  {/* query status*/}
                   <td className="px-6 py-4">
                     <select
                       value={query.status}
@@ -220,16 +187,12 @@ export default function QueriesTab() {
                       <option value="resolved">Resolved</option>
                     </select>
                   </td>
-
-                  {/* query date */}
                   <td className="px-6 py-4 text-sm text-gray-500">
                     <div className="flex items-center">
                       <Calendar className="h-4 w-4 mr-1" />
-                      {new Date(query.submittedAt).toLocaleDateString()}
+                      {dayjs(query.submittedAt).format("DD/MM/YYYY")}
                     </div>
                   </td>
-
-                  {/* details section*/}
                   <td className="px-6 py-4">
                     <button
                       onClick={() => setSelectedQuery(query)}
@@ -240,14 +203,13 @@ export default function QueriesTab() {
                     </button>
                   </td>
                 </tr>
-                
               ))}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Query Details Modal */}
+      {/* Modal */}
       {selectedQuery && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -266,7 +228,7 @@ export default function QueriesTab() {
                     <p className="text-sm text-gray-900">{selectedQuery.fullName}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">phone</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                     <p className="text-sm text-gray-900">{selectedQuery.phone}</p>
                   </div>
                   <div>
@@ -286,7 +248,7 @@ export default function QueriesTab() {
 
                 <div className="flex items-center justify-between pt-4 border-t">
                   <div className="text-sm text-gray-500">
-                    Submitted: {new Date(selectedQuery.submittedAt).toLocaleString()}
+                    Submitted: {dayjs(selectedQuery.submittedAt).format("DD/MM/YYYY hh:mm A")}
                   </div>
                   <div className="flex space-x-2">
                     <select

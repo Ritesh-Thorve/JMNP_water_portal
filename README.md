@@ -103,11 +103,11 @@ npm run dev
 
 ## 🙌 Acknowledgements
 
+- [Chai aur Code: Hitesh Chaudhary Sir](https://www.youtube.com/@chaiaurcode)
 - [Next.js](https://nextjs.org/)
 - [Appwrite](https://appwrite.io/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
-- [Chai aur Code: Hitesh Chaudhary Sir](https://www.youtube.com/@chaiaurcode)
 
 ---
 

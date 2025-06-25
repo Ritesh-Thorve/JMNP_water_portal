@@ -4,7 +4,7 @@ A modern, responsive web application built for Jalgaon Mahanagar Palika to strea
 
 ---
 
-## 🎯 Project Aim – Solving Real-World Problems
+## 🎯 Project Aim – Solving Real-World Problem
 
 This project aims to digitize the water grievance redressal system for Jalgaon citizens. In many Indian cities, water complaints are often handled manually through phone calls, physical visits, or paperwork. This leads to delays, lack of transparency, and inefficient resolution.
 

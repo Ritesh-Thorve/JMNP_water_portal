@@ -110,7 +110,7 @@ npm run dev
 
 ---
 
-## This open for contributions
+## This Poject is Open for contributions
 
 feel free to use it for learning, contributions, or creating something even better!
 

@@ -1,26 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Navbar from "../../components/Navbar"
-import Footer from "../../components/Footer"
-import { Upload, Send, CheckCircle } from "lucide-react"
+import { useState } from "react";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import { Upload, Send, CheckCircle } from "lucide-react";
+import service from "../../lib/appwrite/service";
 
 export default function SubmitQuery() {
   const [formData, setFormData] = useState({
-    fullName: "",
-    phone: "",
-    wardNumber: "",
-    issueType: "",
+    full_name: "",
+    phone_no: "",
+    ward_no: "",
+    issue_type: "",
     message: "",
     image: null,
-  })
+  });
 
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const wards = Array.from({ length: 20 }, (_, i) => i + 1)   
+  const wards = Array.from({ length: 20 }, (_, i) => i + 1);
 
-  const issueTypes = [
+  const issue_types = [
     "No Water Supply",
     "Low Water Pressure",
     "Water Quality Issues",
@@ -29,48 +30,60 @@ export default function SubmitQuery() {
     "Meter Problems",
     "Emergency Repair",
     "Other",
-  ]
+  ];
 
   // Handle input changes
   const handleInputChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     setFormData((prev) => ({
-      ...prev, 
+      ...prev,
       image: file,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    try {
+      await service.submitQuery({
+        full_name: formData.full_name,
+        phone_no: formData.phone_no,
+        ward_no: formData.ward_no,
+        issue_type: formData.issue_type,
+        message: formData.message,
+        image: formData.image,
+      });
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
+      setIsSubmitted(true);
       setFormData({
-        fullName: "",
-        phone: "",
-        wardNumber: "",
-        issueType: "",
+        full_name: "",
+        phone_no: "",
+        ward_no: "",
+        issue_type: "",
         message: "",
         image: null,
-      })
-    }, 3000)
-  }
+      });
+
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 3000);
+
+    } catch (error) {
+      console.error("Failed to submit query:", error);
+      alert("Something went wrong! Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (isSubmitted) {
     return (
@@ -79,18 +92,22 @@ export default function SubmitQuery() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="bg-white rounded-xl shadow-lg p-8 text-center">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Query Submitted Successfully!</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              Query Submitted Successfully!
+            </h2>
             <p className="text-gray-600 mb-4">
-              Thank you for your submission. We have received your query and will respond within 24 hours.
+              Thank you for your submission. We have received your query and
+              will respond within 24 hours.
             </p>
             <p className="text-sm text-gray-500">
-              You will receive a confirmation phone message shortly with your query reference number.
+              You will receive a confirmation phone_no message shortly with your
+              query reference number.
             </p>
           </div>
         </div>
         <Footer />
       </div>
-    )
+    );
   }
 
   return (
@@ -100,9 +117,12 @@ export default function SubmitQuery() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Submit a Query</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Submit a Query
+          </h1>
           <p className="text-lg text-gray-600">
-            Report water supply issues, request assistance, or ask questions about our services.
+            Report water supply issues, request assistance, or ask questions
+            about our services.
           </p>
         </div>
 
@@ -112,15 +132,18 @@ export default function SubmitQuery() {
             {/* Personal Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="full_name"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Full Name *
                 </label>
                 <input
                   type="text"
-                  id="fullName"
-                  name="fullName"
+                  id="full_name"
+                  name="full_name"
                   required
-                  value={formData.fullName}
+                  value={formData.full_name}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter your full name"
@@ -128,15 +151,18 @@ export default function SubmitQuery() {
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  phone No *
+                <label
+                  htmlFor="phone_no"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Phone No *
                 </label>
                 <input
-                  type="phone"
-                  id="phone"
-                  name="phone"
+                  type="phone_no"
+                  id="phone_no"
+                  name="phone_no"
                   required
-                  value={formData.phone}
+                  value={formData.phone_no}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Enter your phone no"
@@ -147,14 +173,17 @@ export default function SubmitQuery() {
             {/* Ward and Issue Type */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="wardNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="ward_no"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Ward Number *
                 </label>
                 <select
-                  id="wardNumber"
-                  name="wardNumber"
+                  id="ward_no"
+                  name="ward_no"
                   required
-                  value={formData.wardNumber}
+                  value={formData.ward_no}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
@@ -167,21 +196,24 @@ export default function SubmitQuery() {
                 </select>
               </div>
 
-               {/* Issue Type */}
+              {/* Issue Type */}
               <div>
-                <label htmlFor="issueType" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="issue_type"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Issue Type *
                 </label>
                 <select
-                  id="issueType"
-                  name="issueType"
+                  id="issue_type"
+                  name="issue_type"
                   required
-                  value={formData.issueType}
+                  value={formData.issue_type}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="">Select issue type</option>
-                  {issueTypes.map((type) => (
+                  {issue_types.map((type) => (
                     <option key={type} value={type}>
                       {type}
                     </option>
@@ -192,7 +224,10 @@ export default function SubmitQuery() {
 
             {/* Message */}
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Detailed Message *
               </label>
               <textarea
@@ -209,12 +244,17 @@ export default function SubmitQuery() {
 
             {/* Image Upload */}
             <div>
-              <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Upload Image (Optional)
               </label>
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
                 <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-600 mb-2">Click to upload or drag and drop an image</p>
+                <p className="text-sm text-gray-600 mb-2">
+                  Click to upload or drag and drop an image
+                </p>
                 <p className="text-xs text-gray-500">PNG, JPG up to 10MB</p>
                 <input
                   type="file"
@@ -230,7 +270,11 @@ export default function SubmitQuery() {
                 >
                   Choose File
                 </label>
-                {formData.image && <p className="mt-2 text-sm text-green-600">Selected: {formData.image.name}</p>}
+                {formData.image && (
+                  <p className="mt-2 text-sm text-green-600">
+                    Selected: {formData.image.name}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -260,5 +304,5 @@ export default function SubmitQuery() {
 
       <Footer />
     </div>
-  )
+  );
 }

@@ -110,12 +110,7 @@ npm run dev
 
 ---
 
-## This Poject is Open for contributions
+## This Poject is Open for contributions 🤝 Connect
 
 feel free to use it for learning, contributions, or creating something even better!
 
----
-
-## 🤝 Connect
-
-For suggestions, feedback, or collaboration

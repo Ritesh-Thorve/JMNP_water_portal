@@ -1,9 +1,11 @@
 # 💧 My JMNP Water Portal
+
 A modern, responsive web application built for Jalgaon Mahanagar Palika to streamline water-related services such as user queries, issue reporting, and official communication. This project is developed purely for learning purposes using modern technologies like Next.js, Appwrite, Redux, Tailwind CSS, and advanced JavaScript concepts.
 
 ---
 
 ## 🎯 Project Aim – Solving Real-World Problems
+
 This project aims to digitize the water grievance redressal system for Jalgaon citizens. In many Indian cities, water complaints are often handled manually through phone calls, physical visits, or paperwork. This leads to delays, lack of transparency, and inefficient resolution.
 
 **My Jalgaon Water Portal** solves this by:
@@ -19,6 +21,7 @@ It delivers results by streamlining communication, reducing response time, impro
 ---
 
 ## 🛠️ Tech Stack Used
+
 | Technology      | Description                                 |
 |-----------------|---------------------------------------------|
 | **Next.js**     | React-based framework for building scalable frontends. |
@@ -30,6 +33,7 @@ It delivers results by streamlining communication, reducing response time, impro
 ---
 
 ## 📦 Key Features
+
 - ✅ Citizens can submit water-related complaints and upload images.
 - ✅ Real-time complaint tracking with status updates.
 - ✅ Admin dashboard to manage queries and publish updates.
@@ -40,6 +44,7 @@ It delivers results by streamlining communication, reducing response time, impro
 ---
 
 ## 📁 Folder Structure (Frontend)
+
 ```
 /my-jalgaon-water-portal
 │

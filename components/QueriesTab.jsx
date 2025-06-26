@@ -188,6 +188,7 @@ export default function QueriesTab() {
 
       {/* Table */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        {/*table heading*/}
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -196,7 +197,7 @@ export default function QueriesTab() {
                   (heading) => (
                     <th
                       key={heading}
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-sm font-semibold text-gray-500 uppercase tracking-wider"
                     >
                       {heading}
                     </th>
@@ -209,24 +210,26 @@ export default function QueriesTab() {
               {filteredQueries.map((query) => (
                 <tr key={query.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-base font-medium text-gray-900">
                       {query.issueType}
                     </div>
-                    <div className="text-sm text-gray-500 flex items-center gap-2">
+                    <div className="text-base text-gray-500 flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       Ward {query.ward_no}
                     </div>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-base text-gray-600 mt-4">
                       Message: {query.message}
                     </p>
+                    
+                    
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center text-gray-900 text-sm">
-                      <User className="h-4 w-4 mr-1" />
+                      <User className="h-5 w-5 mr-1" />
                       {query.full_name}
                     </div>
                     <div className="flex items-center text-gray-500 text-sm">
-                      <Phone className="h-4 w-4 mr-1" />
+                      <Phone className="h-5 w-5 mr-1" />
                       {query.phone_no}
                     </div>
                   </td>
@@ -236,7 +239,7 @@ export default function QueriesTab() {
                       onChange={(e) =>
                         updateQueryStatus(query.id, e.target.value)
                       }
-                      className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                      className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
                         query.status
                       )} focus:outline-none focus:ring-2`}
                     >
@@ -257,13 +260,13 @@ export default function QueriesTab() {
                         onClick={() => setSelectedQuery(query)}
                         className="text-blue-600 hover:text-blue-800 p-1"
                       >
-                        <Eye className="h-4 w-4" />
+                        <Eye className="h-5 w-5" />
                       </button>
                       <button
                         onClick={() => deleteQuery(query.id)}
                         className="text-red-600 hover:text-red-800 p-1"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-5 w-5" />
                       </button>
                     </div>
                   </td>

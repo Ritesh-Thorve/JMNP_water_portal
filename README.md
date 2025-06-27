@@ -2,9 +2,9 @@
 
 A modern, responsive web application built for Jalgaon Mahanagar Palika to streamline water-related services such as user queries, issue reporting, and official communication. This project is developed purely for learning purposes using modern technologies like Next.js, Appwrite, Redux, Tailwind CSS, and advanced JavaScript concepts.
 
-## 🌐 [✨ Go Live - Visit Website »](https://jmnp-water-portal.vercel.app)
+🌐 [✨ Go Live - Visit Website »](https://jmnp-water-portal.vercel.app)
 
-## 🎥 [🎬 Watch Demo Video »](https://youtu.be/5yqzD-ZS-R0?si=l6dA6JUEV4cJWswY)
+🎥 [🎬 Watch Demo Video »](https://youtu.be/5yqzD-ZS-R0?si=l6dA6JUEV4cJWswY)
 > A short walkthrough of the full JMNP Water Portal, including complaint submission, admin dashboard, and announcement system.
 
 ---

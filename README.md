@@ -4,6 +4,10 @@ A modern, responsive web application built for Jalgaon Mahanagar Palika to strea
 
 ## 🌐 [✨ Go Live - Visit Website »](https://jmnp-water-portal.vercel.app)
 
+## 🎥 [🎬 Watch Demo Video »](https://youtu.be/5yqzD-ZS-R0?si=l6dA6JUEV4cJWswY)
+> A short walkthrough of the full JMNP Water Portal, including complaint submission, admin dashboard, and announcement system.
+
+
 ## 🎯 Project Aim – Solving Real-World Problem
 
 This project aims to digitize the water grievance redressal system for Jalgaon citizens. In many Indian cities, water complaints are often handled manually through phone calls, physical visits, or paperwork. This leads to delays, lack of transparency, and inefficient resolution.

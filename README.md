@@ -2,6 +2,8 @@
 
 A modern, responsive web application built for Jalgaon Mahanagar Palika to streamline water-related services such as user queries, issue reporting, and official communication. This project is developed purely for learning purposes using modern technologies like Next.js, Appwrite, Redux, Tailwind CSS, and advanced JavaScript concepts.
 
+## 🌐 [✨ Go Live - Visit Website »](https://jmnp-water-portal.vercel.app)
+
 ---
 
 ## 🎯 Project Aim – Solving Real-World Problem
@@ -46,7 +48,7 @@ It delivers results by streamlining communication, reducing response time, impro
 ## 📁 Folder Structure (Frontend)
 
 ```
-/my-jalgaon-water-portal
+/jmnp_water_portal
 │
 ├── components/        # Shared UI elements (Navbar, Footer, Cards)
 ├── pages/             # Route-based pages via Next.js
@@ -72,8 +74,8 @@ It delivers results by streamlining communication, reducing response time, impro
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Ritesh-Thorve/water-management-app
-cd water-management-app
+git clone https://github.com/Ritesh-Thorve/jmnp_water_portal
+cd jmnp_water_portal
 ```
 
 ### 2. Install Dependencies
